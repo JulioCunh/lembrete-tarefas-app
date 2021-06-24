@@ -15,10 +15,6 @@ export function Home() {
 
   function handleAddTask(newTaskTitle: string) {
     //TODO - add new task if it's not empty
-    if (newTaskTitle === '')
-      `{
-      return
-    }`;
     const data = {
       id: new Date().getTime(),
       title: newTaskTitle,
@@ -29,16 +25,22 @@ export function Home() {
 
   function handleMarkTaskAsDone(id: number) {
     //TODO - mark task as done if exists
-    const task = tasks.filter((item) => item.id === id)[0];
-    task.done = !task.done;
+    const newTasks = [...tasks];
 
-    const newTasks = [...new Set([task, ...tasks])];
+    const taskFound = newTasks.find((task) => task.id === id);
+
+    if (!taskFound) return;
+
+    taskFound.done = !taskFound.done;
+
     setTasks(newTasks);
   }
 
   function handleRemoveTask(id: number) {
     //TODO - remove task from state
-    setTasks((oldState) => oldState.filter((task) => task.id !== id));
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+
+    setTasks(filteredTasks);
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   Image,
   Platform,
   StyleSheet,
@@ -19,8 +20,12 @@ export function TodoInput({ addTask }: TodoInputProps) {
 
   function handleAddNewTask() {
     //TODO - Call addTask and clean input value
-    addTask(task);
-    setTask('');
+    if (!task) {
+      Alert.alert('Opa, você esqueceu de preencher o input.');
+    } else {
+      addTask(task);
+      setTask('');
+    }
   }
 
   return (
@@ -37,9 +42,9 @@ export function TodoInput({ addTask }: TodoInputProps) {
         placeholder="Adicionar novo todo..."
         returnKeyType="send"
         //TODO - use value, onChangeText and onSubmitEditing props
-        value={task}
         onChangeText={setTask}
-        onEndEditing={handleAddNewTask}
+        value={task}
+        onSubmitEditing={handleAddNewTask}
       />
       <TouchableOpacity
         testID="add-new-task-button"
